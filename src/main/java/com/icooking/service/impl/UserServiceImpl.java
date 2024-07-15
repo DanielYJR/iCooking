@@ -142,8 +142,12 @@ public class UserServiceImpl implements UserService {
 
         int recipeId = userLikeDTO.getRecipeId();
         int userId = BaseContext.getCurrentUserId();
-        String recipeUserStatus = "recipe:" + recipeId + " user:" + userId + " status";
-        String recipeLikes = "recipe:" + recipeId + ":LikesCount";
+
+        StringBuilder sb = new StringBuilder();
+        String recipeUserStatus = sb.append("recipe:").append(recipeId).append(" user:").append(userId).append(" status").toString();
+        // 重置StringBuilder，以便重新使用
+        sb.setLength(0);
+        String recipeLikes = sb.append("recipe:").append(recipeId).append(":LikesCount").toString();
 
         Integer status = (Integer) redisTemplate.opsForValue().get(recipeUserStatus);
         Integer likesCount = (Integer) redisTemplate.opsForValue().get(recipeLikes);

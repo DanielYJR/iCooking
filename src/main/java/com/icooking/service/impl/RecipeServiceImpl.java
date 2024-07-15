@@ -26,7 +26,8 @@ public class RecipeServiceImpl implements RecipeService {
     public Recipe acquireRecipeDetails(int recipeId) {
 
         // 将recipeId对应的菜谱点赞数同步到数据库中
-        String recipeLikes = "recipe:" + recipeId + ":LikesCount";
+        StringBuilder sb = new StringBuilder();
+        String recipeLikes = sb.append("recipe:").append(recipeId).append(":LikesCount").toString();
         Integer likesCount = (Integer) redisTemplate.opsForValue().get(recipeLikes);
         if (likesCount != null) {
             recipeMapper.updateLikesCount(recipeId, likesCount);
@@ -44,10 +45,12 @@ public class RecipeServiceImpl implements RecipeService {
     public List<Recipe> findTop20Recipes() {
         List<Recipe> recipeList = recipeMapper.findTop20RecipesByLikesAndMarks();
 
+        StringBuilder sb = new StringBuilder();
         for (Recipe recipe : recipeList) {
             int recipeId = recipe.getId();
-            // 将recipeId对应的菜谱点赞数同步到数据库中
-            String recipeLikes = "recipe:" + recipeId + ":LikesCount";
+            String recipeLikes = sb.append("recipe:").append(recipeId).append(":LikesCount").toString();
+            sb.setLength(0);
+
             Integer likesCount = (Integer) redisTemplate.opsForValue().get(recipeLikes);
             if (likesCount != null) {
                 recipeMapper.updateLikesCount(recipeId, likesCount);
