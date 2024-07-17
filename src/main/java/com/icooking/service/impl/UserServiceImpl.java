@@ -219,6 +219,7 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
+    @Transactional
     public UserMarkClickVO processMarkClick(UserMarkClickDTO userMarkDTO) {
 
         int recipeId = userMarkDTO.getRecipeId();
@@ -266,6 +267,11 @@ public class UserServiceImpl implements UserService {
         int currentUserId = BaseContext.getCurrentUserId();
         List<Recipe> recipeList = recipeMapper.findAllRecipesMarkedByUserId(currentUserId);
         return recipeList;
+    }
+
+    @Override
+    public String getCurrentUserName() {
+        return userMapper.getNameById(BaseContext.getCurrentUserId());
     }
 
 }

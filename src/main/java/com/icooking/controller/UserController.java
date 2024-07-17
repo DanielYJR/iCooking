@@ -97,4 +97,9 @@ public class UserController {
         List<Recipe> recipeList = userService.getMarkedRecipes();
         return Result.success(recipeList);
     }
+
+    @GetMapping("/currentUser")
+    public Result getCurrentUserName() {
+        return Result.success(userService.getCurrentUserName());
+    }
 }

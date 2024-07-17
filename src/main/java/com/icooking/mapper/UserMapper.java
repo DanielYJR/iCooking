@@ -15,4 +15,7 @@ public interface UserMapper extends BaseMapper<User> {
     @Insert("insert into users (username, password, isAdmin, birthday)" +
             "values (#{username}, #{password}, #{isAdmin}, #{birthday})")
     void insertUser(User user);
+
+    @Select("select username from users where id = #{currentUserId}")
+    String getNameById(int currentUserId);
 }

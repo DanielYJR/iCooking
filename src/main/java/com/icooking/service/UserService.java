@@ -54,4 +54,6 @@ public interface UserService {
      * @return
      */
     List<Recipe> getMarkedRecipes();
+
+    String getCurrentUserName();
 }
