@@ -28,7 +28,7 @@ public class SearchServiceImpl implements SearchService {
         // 如果搜索词中含有DROP TABLE、DROP DATABASE或数字符号，则抛出异常，并给出警告信息
         if (word != null && (word.toUpperCase().contains("DROP TABLE") ||
                 word.toUpperCase().contains("DROP DATABASE") ||
-                word.matches(".*[0-9+\\-*/=()].*"))) {
+                word.matches(".*[+\\-*/=()].*"))) {
             throw new SearchException("搜索词存在非法内容");
         }
 
